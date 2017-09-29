@@ -16,9 +16,12 @@ object FunctionalProgramming {
 
   // problem 2
   // a self-composition iterator combinator
+  def id(x: Int) = x
   def selfIter[T](f: T=>T, n: Int): T=>T = {
     // f composed with itself n times
     if (n == 0)
+      identity(f)
+    else if (n == 1)
       f
     else
       compose(selfIter(f, n-1), f)
@@ -27,7 +30,8 @@ object FunctionalProgramming {
   def inc(x: Double) = x + 1
   def double(x: Double) = 2 * x
   selfIter(inc _, 10)(3)
-  selfIter(double _, 4)(2)
+  selfIter(inc _, 0)(4)
+  selfIter(double _, 5)(3)
   //*********************
 
   // problem 3
@@ -65,17 +69,10 @@ object FunctionalProgramming {
   //*********************
 
   // problem 5
-  /* Some programmers like to handle errors by throwing exceptions,
-  others like to return the optional value None. Implement a combinator
-  called deOptionize that takes a unary, option-returning function, f,
-  as input and converts it into a non-option returning function g that
-  handles errors by throwing exceptions.
-  Use your combinator to convert the following function:
-
-
-   */
-
-  def deOptionize[T, E](f: T=>Option[E]): T=>E = {
+  // A combinator that takes a a unary, option-returning function, f,
+  // as input and converts it into a non-option returning function g that
+  // handles errors by throwing exceptions.
+    def deOptionize[T, E](f: T=>Option[E]): T=>E = {
     def g(input: T): E = {
       f(input) match {
         case None => throw new Exception("The input is incorrect.")
@@ -94,23 +91,4 @@ object FunctionalProgramming {
   } catch {
     case e: Exception => println(e)
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
