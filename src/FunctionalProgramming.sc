@@ -12,7 +12,7 @@ object FunctionalProgramming {
   mul3ThenPlus2(3)
   def plus2ThenMul3 = compose(mul3 _, plus2 _)
   plus2ThenMul3(4)
-  
+
   // problem 2
   // a self-composition iterator combinator
   def selfIter[T](f: T=>T, n: Int): T=>T = {
@@ -45,19 +45,16 @@ object FunctionalProgramming {
   // An implementation of a recursive combinator that
   // that takes two input and return a recursive function
   // A
-//  def recur(baseVal: Int, combiner: (Int, Int)=>Int): Int=>Int = {
-//    def func(n: Int): Int = {
-//      if (n == 0)
-//        baseVal
-//      else
-//
-//    }
-//    func _
-//  }
-  def factorial(n: Int): Int = {
-    if (n == 1)
-      1
-    else
-      n * factorial(n - 1)
+  def recur(baseVal: Int, combiner: (Int, Int)=>Int): Int=>Int = {
+    def func(n: Int): Int = {
+      if (n == 0)
+        baseVal
+      else
+        combiner(n, func(n-1))
+    }
+    func _
   }
+  def factorial = recur(1, (x: Int, y: Int) => x * y)
+  factorial(5)
+
 }
