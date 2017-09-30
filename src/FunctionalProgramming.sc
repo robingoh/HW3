@@ -16,11 +16,10 @@ object FunctionalProgramming {
 
   // problem 2
   // a self-composition iterator combinator
-  def id(x: Int) = x
   def selfIter[T](f: T=>T, n: Int): T=>T = {
     // f composed with itself n times
     if (n == 0)
-      identity(f)
+      (x: T) => x
     else if (n == 1)
       f
     else
@@ -32,6 +31,7 @@ object FunctionalProgramming {
   selfIter(inc _, 10)(3)
   selfIter(inc _, 0)(4)
   selfIter(double _, 5)(3)
+  selfIter(double _, 0)(14)
   //*********************
 
   // problem 3
